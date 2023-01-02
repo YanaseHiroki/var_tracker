@@ -25,8 +25,8 @@
             } else {
                 $is_primary = [0, 0];
             }
-            echo mkbtn('ファイル追加', 'file-input.php',$is_primary[0]);
-            echo mkbtn('変数追尾', 'track.php',$is_primary[1]);
+            echo mkbtn('(1) ファイル追加', 'file-input.php',$is_primary[0]);
+            echo mkbtn('(2) 変数追尾', 'track.php',$is_primary[1]);
             ?>
         </div>
     </div>
