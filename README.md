@@ -1,7 +1,10 @@
 # var_tracker
  In PHP file, this debugging tool discloses the value of the selected  variables.
+ 
+![変数追尾](https://user-images.githubusercontent.com/60053865/210243836-4dea7fd8-ebac-4de4-a891-9918e712b991.png)
 
 <h3>制作の背景</h3><br>
+
 <p>プログラミングにデバッグはつきものです。<br>
 しかし、困ったことにPHPではエラーメッセージが出力されません。<br>
 これでは何行目でどのような種類のエラーが発生したのかわかりません。</p><br>
