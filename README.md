@@ -1,5 +1,5 @@
 # var_tracker
- In PHP file, this debug tool discloses the value of the selected  variables.
+ In PHP file, this debug tool discloses the value of all variables at the scopoe.
  
 ![変数追尾](https://user-images.githubusercontent.com/60053865/210243836-4dea7fd8-ebac-4de4-a891-9918e712b991.png)
 
