@@ -13,7 +13,7 @@
     
     <!-- header -->
     <div class="navbar-fixed-top bg-info" style="padding:0 .5em .7em">
-        <a href="test.php"><h4><b>変数追尾君(Variable tracker)</b></h4></a>
+        <a href="why.php"><h4><b>変数追尾君(Variable tracker)</b></h4></a>
 
         <div class="btn-group">
             <?php 

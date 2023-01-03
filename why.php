@@ -1,9 +1,9 @@
 <?php
-require './func/element.php';
+require './module/function.php';
 require './module/header.php';
 ?>
 
-<h1>制作の背景</h1><br>
+<h3>制作の背景</h3><br>
 <p>プログラミングにデバッグはつきものです。<br>
 しかし、困ったことにPHPではエラーメッセージが出力されません。<br>
 これでは何行目でどのような種類のエラーが発生したのかわかりません。</p><br>

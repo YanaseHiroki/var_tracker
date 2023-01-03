@@ -4,24 +4,9 @@
     position: relative;/*←相対位置*/
     padding-bottom: 30px;/*←footerの高さ*/
     box-sizing: border-box;/*←全て含めてmin-height:100vhに*/
+    max-width: 1100px;
 }
 
-section{
-    margin: auto;
-}
-
-form{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 50vh;
-
-}
-
-pre{
-    text-align: left;
-
-}
 footer{
     width: 100%;
     background-color: #89c7de;
@@ -30,4 +15,63 @@ footer{
     padding: 30px 0;
     position: absolute;/*←絶対位置*/
     bottom: 0; /*下に固定*/
+}
+
+
+
+/* ファイル追加画面でinput要素を画面中央に配置する */
+form{
+    text-align: left;
+    padding: 0 10vw;
+}
+
+pre,details{
+    text-align: left;
+    border: solid 1px;              /* 枠線指定 */
+    padding: .5em;
+    margin-bottom: 1em;
+    border-radius: .5em;
+}
+
+/* 出力内容の折り畳み表示 */
+
+summary{
+    color: blue;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+
+}
+
+/* 変数追尾画面の表の表示を整える */
+pre{
+    background-color: white;  /* 背景色指定 */
+    border: 0;
+}
+
+th,td{
+    border: solid 1px;              /* 枠線指定 */
+    padding: 0.2em;
+}
+
+.name{
+    background-color: #dcf9ff;  /* 背景色指定 */
+}
+
+table{
+    background-color: #f1fcff;  /* 背景色指定 */
+    border-collapse:  collapse;     /* セルの線を重ねる */
+    line-height: 1em;
+}
+
+.main{
+    min-width: 100%;
+}
+
+.first_column{
+    width: 1em;
+    text-align: center;
+}
+
+.second_column{
+    width: 10em;
 }
