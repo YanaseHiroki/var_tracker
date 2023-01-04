@@ -1,11 +1,16 @@
+<?php function ver() {echo 'ver.0.1';}; ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./img/favicon.png"><!-- 32×32 -->
     <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/prism.css">
     <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/prism.js"></script>
     <title>変数追尾君</title>
 </head>
 <body>
@@ -13,8 +18,9 @@
     
     <!-- header -->
     <div class="navbar-fixed-top bg-info" style="padding:0 .5em .7em">
-        <a href="why.php"><h4><b>変数追尾君(Variable tracker)</b></h4></a>
-
+        <a href="why.php"><h4><b>変数追尾君(Variable tracker)</b>
+        <?php ver(); ?></h4></a>
+        
         <div class="btn-group">
             <?php 
             $file = basename($_SERVER['PHP_SELF']);
@@ -32,4 +38,4 @@
     </div>
 
     <!-- main contents -->
-    <div class="text-center" style="padding:8em 1em 0"><!-- コンテンツ -->
+    <div class="text-center" style="padding:6em 1em 0"><!-- コンテンツ -->

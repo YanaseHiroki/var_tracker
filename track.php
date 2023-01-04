@@ -3,23 +3,63 @@ session_start();
 require './module/function.php';
 require './module/header.php';
 
-var_export($_FILES);
-$main_file = $_REQUEST['main_file'];
-exit;
-// ファイルがアップロードされているかと、POST通信でアップロードされたかを確認
-if( !empty($_FILES['userfile']['tmp_name']) && is_uploaded_file($_FILES['userfile']['tmp_name']) ) {
 
-    // 一時ファイルの読み込み
-    $contents = file($_FILES['userfile']['tmp_name'], FILE_IGNORE_NEW_LINES);
-    $_SESSION['contents'] = $contents;
+
+// ダウンロードフォルダのパス（年月日時分秒ミリ秒にする）
+$path = 'download/'. date('ymdhis');
+$_SESSION['path'] = $path;
+if (!file_exists('download')) mkdir('download');
+mkdir($path);
+
+// var_export($_FILES['upload_file']);
+$main_file = isset($_REQUEST['main_file']) ? $_REQUEST['main_file'] : $_SESSION['main_file'];
+$_SESSION['main_file'] = $main_file;
+
+// ファイルがあれば処理実行
+if(isset($_FILES["upload_file"])){
+
+    // アップロードされたファイルの数だけ処理
+    for($i = 0; $i < count($_FILES["upload_file"]["name"]); $i++ ){
+
+        // アップロードされたファイルか検査
+        if(is_uploaded_file($_FILES["upload_file"]["tmp_name"][$i])){
+
+            // そのファイルがメインファイルか照合
+            if($main_file === $_FILES["upload_file"]["name"][$i]) {
+                
+                // 一時ファイルを変数とセッションに読み込み
+                $contents = file($_FILES['upload_file']['tmp_name'][$i], FILE_IGNORE_NEW_LINES);
+                $_SESSION['contents'] = $contents;
+            } else {
+
+                // ファイルをダウンロードフォルダに移動
+                move_uploaded_file($_FILES["upload_file"]["tmp_name"][$i], $path . "/" . $_FILES["upload_file"]["name"][$i]);
+            }
+
+        }
+    }
 } else {
+    // ファイルが渡されているか検査
+    if (!isset($_SESSION['main_file'])) {
+        echo '<p class="text-danger">表示するファイルがありません。</p>';
+        echo '<a href="file-input.php">ファイル追加に戻る</a>';
+        remove_directory('download');
+        exit;
+    }
 
-    // セッションからファイルの内容を読み込み
+    // セッションからメインファイルの内容を読み込み
     $contents = $_SESSION['contents'];
 }
 
+// コメント行を削除
+foreach ($contents as &$line) {
+    if ($line[0] === '/') {
+        $line = '';
+        // echo 'kesita';
+    }
+}
 
-// 読み込んだコードからhtmlを削除
+// $contentsに読み込んだコードからhtmlを削除
 $contents_str = implode("NeXtLiNe", $contents);
 preg_match_all('/\?php.+?\?>/', $contents_str, $contents_arr);
 $contents_arr = $contents_arr[0];
@@ -31,7 +71,7 @@ $contents_str = implode("NeXtLiNe", $contents_arr);
 $contents_arr = explode("NeXtLiNe", $contents_str);
 $contents = array_filter($contents_arr);
 
-// $contentsの各行の間にget_defined_vars()関数を埋め込む
+// $contentsの各行の間にget_defined_vars()関数などを埋め込む
 $i = 0;
 foreach ($contents as $line) {
     $inserted[] = $line;
@@ -40,23 +80,34 @@ foreach ($contents as $line) {
 }
 array_unshift($inserted, '<?php $vars_initial = get_defined_vars();');
 
-// 配列$insertedを結合してファイル保存
+// 配列$insertedを文字列に結合してファイルとして保存
 $inserted_str = implode("\n", $inserted);
-file_put_contents('inserted.php', $inserted_str);
+file_put_contents( $path . '/inserted.php', $inserted_str);
 
-// ファイルinserted.phpを呼び出して裏で実行
+// エラー表示設定をTRUEにする
+ini_set( 'display_errors' , 1 );
+
+// ファイルinserted.phpを呼び出して実行
 echo '<details><summary>出力内容▼</summary>';
-require 'inserted.php';
+try {
+    include $path . '/inserted.php';
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
 echo '</details>';
 
+// エラー表示設定を解除
+ini_set( 'display_errors' , 0 );
+
 // コードのPHP部分の表示（メイン部分）
-echo "<hr><h3>変数の値</h3><pre>";
+echo "<h3>$main_file</h3><pre>";
 
 $i = 1;
 $max = strlen(count($contents));
 
 // 列名の出力
-$name_tracking = (isset($_REQUEST['var'])) ? '$' . $_REQUEST['var'] : '変数';
+$reset_link = '<a href="track.php"><button>' . '$' . $_REQUEST['var'] . '</button></a>';
+$name_tracking = (isset($_REQUEST['var'])) ? $reset_link : '変数';
 echo <<<EOT
 <table class='main'>
     <thead>
@@ -81,14 +132,14 @@ foreach ($contents as $line) {
         if (isset($vars_in_the_way[$i-1][$key])) {
             var_dump($vars_in_the_way[$i-1][$key]);
         } else {
-            echo "<font color='blue'>undefined</font>\n";
+            echo "<font color='green'>undefined</font>\n";
         }
     }
     echo "</td>\n";
 
     // ３列目：PHPコード
     $line = htmlentities($line);
-    echo "<td>$line</td></tr>\n";
+    echo "<td><code class='language-php'>$line</code></td></tr>\n";
 
     // 行番号が選択されている場合
     if ($_REQUEST['line'] == $i) {
@@ -108,8 +159,9 @@ foreach ($contents as $line) {
 }
 echo "</table></pre>\n";
 
-//ファイルを削除する
-if(file_exists('inserted.php')) unlink('inserted.php');
-
 require './module/footer.php';
 ?>
+
+<!-- 実装アイデア -->
+<!-- エラーが起きた時は、行を取得してその前の行までだけで再実行 -->
+<!-- get_defined_vars; exit;を1行だけ入れるのを場所を１つ１つ試していく -->

@@ -58,11 +58,15 @@ th,td{
 }
 
 table{
-    background-color: #f1fcff;  /* 背景色指定 */
+    background-color: #f5f2f0;  /* 背景色指定 */
     border-collapse:  collapse;     /* セルの線を重ねる */
     line-height: 1em;
 }
 
+table button{
+    /* background-color: white;  背景色指定 */
+    color: blue;
+}
 .main{
     min-width: 100%;
 }
@@ -74,4 +78,11 @@ table{
 
 .second_column{
     width: 10em;
+}
+
+/* 使い方ページ */
+
+img{
+    width: 60vw;
+    border: solid 1px;              /* 枠線指定 */
 }
