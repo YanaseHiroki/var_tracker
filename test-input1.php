@@ -1,9 +1,9 @@
 <?php 
-// require 'test-input2.php';
+require 'test-input2.php';
 
-$a = 1234;
+$a = 1000;
 $b = 'foobar';
-// $c = hoge($a);
+$c = hoge($a);
 $a /= 0; // Error: Devide by Zero
 echo 'こちらtestです';
 unset($a);

@@ -7,7 +7,9 @@ function hoge ($num) {
         $tmp /= -2;
         $num += $tmp;
     }
-    return $num; 
+    return round($num); 
 }
+
+echo 'これはtest-input2.phpです';
 
 ?>

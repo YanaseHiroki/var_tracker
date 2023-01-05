@@ -4,8 +4,11 @@ session_unset();
 require './module/function.php';
 require './module/header.php';
 
+// エラー表示設定を解除
+// ini_set( 'display_errors' , 0 );
+
 // ダウンロードフォルダを削除する
-remove_directory('download');
+if (file_exists('download')) remove_directory('download');
 ?>
 
 <!-- JavaScript -->
@@ -37,12 +40,12 @@ function OnFileSelect( inputElement )
 <p>変数の値を確認したいファイルを選択してください。<br>
 そのファイルの処理の途中で(requireなどで）参照するファイルがあれば一緒に選択してください。</p>
 
-<p>対応ファイル情報：<br>
-別ファイル参照に対応していません（本番環境エラー）。<br>
+<p><b>対応ファイル情報：</b><br>
+別ファイル参照に対応しました（修正済み）。<br>
 htmlとphpの混在に対応しています。<br>
 try catch文に一部非対応です。</p><br>
 
-<label for="upload_file">確認したいファイルと参照するファイル（複数可）</label>
+<label for="upload_file">確認したいファイルと参照するファイル（複数選択可）</label>
 <input type="file" name="upload_file[]" id="upload_file" onchange="OnFileSelect( this );" multiple required>
 <p id="ID001" ></p>
 <input type="submit" value="追加">

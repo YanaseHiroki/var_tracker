@@ -5,13 +5,13 @@ require './module/header.php';
 
 
 
-// ダウンロードフォルダのパス（年月日時分秒ミリ秒にする）
-$path = 'download/'. date('ymdhis');
+// ダウンロードフォルダを作成
+$path = isset($_FILES["upload_file"]) ? 'download/'. date('ymdhis') : $_SESSION['path'];
 $_SESSION['path'] = $path;
 if (!file_exists('download')) mkdir('download');
-mkdir($path);
+if (!file_exists($path)) mkdir($path);
 
-// var_export($_FILES['upload_file']);
+// メインファイル名の取得とセッションへの保存
 $main_file = isset($_REQUEST['main_file']) ? $_REQUEST['main_file'] : $_SESSION['main_file'];
 $_SESSION['main_file'] = $main_file;
 
