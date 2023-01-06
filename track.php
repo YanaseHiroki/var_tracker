@@ -17,7 +17,7 @@ if (!file_exists($path)) mkdir($path);
 $main_file = isset($_REQUEST['main_file']) ? $_REQUEST['main_file'] : $_SESSION['main_file'];
 $_SESSION['main_file'] = $main_file;
 
-// ファイルがあれば処理実行
+// ファイルがあればファイル受け取り処理実行
 if(isset($_FILES["upload_file"])){
 
     // アップロードされたファイルの数だけ処理
@@ -52,66 +52,25 @@ if(isset($_FILES["upload_file"])){
     // セッションからメインファイルの内容を読み込み
     $contents = $_SESSION['contents'];
 }
+// ーー↑ファイル受け取り処理ここまでーー
+// ーー↓変数取得処理ここから（セミコロンの場所で変数を取得してまとめるバージョン）ーー
 
-// // コメント行を削除
-// foreach ($contents as &$line) {
-//     if ($line[0] === '/') {
-//         $line = '';
-//     }
-// }
+// 配列$contentsのセミコロンがそれぞれ何行目にあるか取得
+$semicolon_place = semicolon_place($contents);
 
-// // $contentsに読み込んだコードからhtmlを削除
-// $contents = trim_html($contents);
+// 配列$contentsの行末セミコロンの時点での変数を取得
+$vars_semicolon = vars_semicolon($contents, $path, $main_file);
 
-// // $contentsの各行の間にget_defined_vars()関数などを埋め込む
-// $i = 0;
-// foreach ($contents as $line) {
-//     $inserted[] = $line;
-//     $inserted[] = '$vars_in_the_way[' . $i . '] = array_diff(get_defined_vars(),$vars_initial);';
-//     $i++;
-// }
-// array_unshift($inserted, '<?php $vars_initial = get_defined_vars();');
+// 各行での最終的な変数を決定、配列$vars_in_the_wayに格納
+$vars_in_the_way = vars_in_the_way($contents, $semicolon_place, $vars_semicolon);
 
-
-
-
-// // 配列$insertedを文字列に結合してファイルとして保存
-// $inserted_str = implode("\n", $inserted);
-// file_put_contents( $path . '/inserted.php', $inserted_str);
-
-// 配列$contentsを文字列に結合してファイルとして保存
-$contents_str = implode("\n", $contents);
-file_put_contents( "$path/$main_file.php", $contents_str);
-
-// エラー表示設定をTRUEにする
-ini_set( 'display_errors' , 1 );
-
-// ファイルinserted.phpを呼び出して実行
-echo '<details><summary>出力内容▼</summary>';
-try {
-    include "$path/$main_file.php";
-} catch (Exception $e) {
-    echo $e->getMessage();
-}
-echo '</details>';
-
-// エラー表示設定を解除
-// ini_set( 'display_errors' , 0 );
-
-// 各行における変数を取得
-for ($i=0; $i<count($contents); $i++) {
-    if(empty(inspect_line ($contents, $i+1, $path)) && $i != 0){
-        $vars_in_the_way[$i] = $vars_in_the_way[$i-1];
-    } else {
-        $vars_in_the_way[$i] = inspect_line ($contents, $i+1, $path);
-    }
-    
-}
 // コードのPHP部分の表示（メイン部分）
 echo "<h3>$main_file</h3><pre>";
 
 $i = 1;
 $max = strlen(count($contents));
+// ーー↑変数取得処理ここまで（セミコロンの場所で変数を取得してまとめるバージョン）ーー
+// ーー↓コード出力ここからーー
 
 // 列名の出力
 $reset_link = '<a href="track.php"><button>' . '$' . $_REQUEST['var'] . '</button></a>';
@@ -169,7 +128,3 @@ echo "</table></pre>\n";
 
 require './module/footer.php';
 ?>
-
-<!-- 実装アイデア -->
-<!-- エラーが起きた時は、行を取得してその前の行までだけで再実行 -->
-<!-- get_defined_vars; exit;を1行だけ入れるのを場所を１つ１つ試していく -->
