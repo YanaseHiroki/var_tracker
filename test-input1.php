@@ -1,17 +1,6 @@
-<?php 
-require 'test-input2.php';
-
-$a = 1000;
-$b = 'foobar';
-$c = hoge($a);
-$a /= 0; // Error: Devide by Zero
-echo 'こちらtestです';
-unset($a);
-// foo();
-// $x = new COM('AAA.BBB');
-
+<?php
+$a = 1;
+$b = 2;
+$c = 3;
+echo 'test-input1.phpです';
 ?>
-
-<h3>htmlです</h3>
-
-<?php $c += 1000; ?>

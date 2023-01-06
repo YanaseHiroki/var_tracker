@@ -1,19 +1,19 @@
 <?php
 session_start();
-session_unset();
 require './module/function.php';
 require './module/header.php';
 
 // エラー表示設定を解除
-// ini_set( 'display_errors' , 0 );
+ini_set( 'display_errors' , 0 );
 
 // ダウンロードフォルダを削除する
-if (file_exists('download')) remove_directory('download');
+$path = $_SESSION['path'];
+if (file_exists($path)) remove_directory($path);
+session_unset();
 ?>
 
 <!-- JavaScript -->
 <script type="text/javascript" language="javascript">
-<!--
 function OnFileSelect( inputElement )
 {
     // ファイル情報を取得
@@ -41,9 +41,9 @@ function OnFileSelect( inputElement )
 そのファイルの処理の途中で(requireなどで）参照するファイルがあれば一緒に選択してください。</p>
 
 <p><b>対応ファイル情報：</b><br>
-別ファイル参照に対応しました（修正済み）。<br>
 htmlとphpの混在に対応しています。<br>
-try catch文に一部非対応です。</p><br>
+try catch文に一部非対応です（対応予定ではあります）。<br>
+異なるディレクトリにあるファイルの参照(requireなど）に非対応です。</p><br>
 
 <label for="upload_file">確認したいファイルと参照するファイル（複数選択可）</label>
 <input type="file" name="upload_file[]" id="upload_file" onchange="OnFileSelect( this );" multiple required>

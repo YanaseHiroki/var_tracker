@@ -3,6 +3,8 @@ session_start();
 require './module/function.php';
 require './module/header.php';
 
+// エラー表示設定をTRUEにする
+ini_set( 'display_errors' , 1 );
 
 
 // ダウンロードフォルダを作成
@@ -51,38 +53,35 @@ if(isset($_FILES["upload_file"])){
     $contents = $_SESSION['contents'];
 }
 
-// コメント行を削除
-foreach ($contents as &$line) {
-    if ($line[0] === '/') {
-        $line = '';
-        // echo 'kesita';
-    }
-}
+// // コメント行を削除
+// foreach ($contents as &$line) {
+//     if ($line[0] === '/') {
+//         $line = '';
+//     }
+// }
 
-// $contentsに読み込んだコードからhtmlを削除
-$contents_str = implode("NeXtLiNe", $contents);
-preg_match_all('/\?php.+?\?>/', $contents_str, $contents_arr);
-$contents_arr = $contents_arr[0];
-for($i=0; $i<count($contents_arr); $i++) {
-    $contents_arr[$i] = str_replace('?php', '', $contents_arr[$i]);
-    $contents_arr[$i] = str_replace('?>', '', $contents_arr[$i]);
-}
-$contents_str = implode("NeXtLiNe", $contents_arr);
-$contents_arr = explode("NeXtLiNe", $contents_str);
-$contents = array_filter($contents_arr);
+// // $contentsに読み込んだコードからhtmlを削除
+// $contents = trim_html($contents);
 
-// $contentsの各行の間にget_defined_vars()関数などを埋め込む
-$i = 0;
-foreach ($contents as $line) {
-    $inserted[] = $line;
-    $inserted[] = '$vars_in_the_way[' . $i . '] = array_diff(get_defined_vars(),$vars_initial);';
-    $i++;
-}
-array_unshift($inserted, '<?php $vars_initial = get_defined_vars();');
+// // $contentsの各行の間にget_defined_vars()関数などを埋め込む
+// $i = 0;
+// foreach ($contents as $line) {
+//     $inserted[] = $line;
+//     $inserted[] = '$vars_in_the_way[' . $i . '] = array_diff(get_defined_vars(),$vars_initial);';
+//     $i++;
+// }
+// array_unshift($inserted, '<?php $vars_initial = get_defined_vars();');
 
-// 配列$insertedを文字列に結合してファイルとして保存
-$inserted_str = implode("\n", $inserted);
-file_put_contents( $path . '/inserted.php', $inserted_str);
+
+
+
+// // 配列$insertedを文字列に結合してファイルとして保存
+// $inserted_str = implode("\n", $inserted);
+// file_put_contents( $path . '/inserted.php', $inserted_str);
+
+// 配列$contentsを文字列に結合してファイルとして保存
+$contents_str = implode("\n", $contents);
+file_put_contents( "$path/$main_file.php", $contents_str);
 
 // エラー表示設定をTRUEにする
 ini_set( 'display_errors' , 1 );
@@ -90,15 +89,24 @@ ini_set( 'display_errors' , 1 );
 // ファイルinserted.phpを呼び出して実行
 echo '<details><summary>出力内容▼</summary>';
 try {
-    include $path . '/inserted.php';
+    include "$path/$main_file.php";
 } catch (Exception $e) {
     echo $e->getMessage();
 }
 echo '</details>';
 
 // エラー表示設定を解除
-ini_set( 'display_errors' , 0 );
+// ini_set( 'display_errors' , 0 );
 
+// 各行における変数を取得
+for ($i=0; $i<count($contents); $i++) {
+    if(empty(inspect_line ($contents, $i+1, $path)) && $i != 0){
+        $vars_in_the_way[$i] = $vars_in_the_way[$i-1];
+    } else {
+        $vars_in_the_way[$i] = inspect_line ($contents, $i+1, $path);
+    }
+    
+}
 // コードのPHP部分の表示（メイン部分）
 echo "<h3>$main_file</h3><pre>";
 
