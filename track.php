@@ -8,7 +8,7 @@ ini_set( 'display_errors' , 1 );
 
 
 // ダウンロードフォルダを作成
-$path = isset($_FILES["upload_file"]) ? 'download/'. date('ymdhis') : $_SESSION['path'];
+$path = isset($_SESSION['path']) ? $_SESSION['path'] : 'download/'. date('ymd-His');
 $_SESSION['path'] = $path;
 if (!file_exists('download')) mkdir('download');
 if (!file_exists($path)) mkdir($path);
@@ -55,14 +55,19 @@ if(isset($_FILES["upload_file"])){
 // ーー↑ファイル受け取り処理ここまでーー
 // ーー↓変数取得処理ここから（セミコロンの場所で変数を取得してまとめるバージョン）ーー
 
+// $contentsの各要素をtrimする
+foreach($contents as &$line) {
+    $line = rtrim($line);
+}
+
 // 配列$contentsのセミコロンがそれぞれ何行目にあるか取得
 $semicolon_place = semicolon_place($contents);
 
 // 配列$contentsの行末セミコロンの時点での変数を取得
-$vars_semicolon = vars_semicolon($contents, $path, $main_file);
+$semicolon_vars = semicolon_vars($contents, $path, $main_file);
 
 // 各行での最終的な変数を決定、配列$vars_in_the_wayに格納
-$vars_in_the_way = vars_in_the_way($contents, $semicolon_place, $vars_semicolon);
+$vars_in_the_way = vars_in_the_way($semicolon_place, $semicolon_vars);
 
 // コードのPHP部分の表示（メイン部分）
 echo "<h3>$main_file</h3><pre>";
@@ -86,6 +91,8 @@ echo <<<EOT
     </thead>
 EOT;
 
+// タグなどの記号を文字に置き換える
+$contents = h($contents);
 foreach ($contents as $line) {
 
     // 1列目：行番号（ブレイクリンク）
@@ -93,7 +100,7 @@ foreach ($contents as $line) {
     print("<tr><td class='first_column'><a href=track.php?line=$href><button>$i</button></a></td>\n");
     
     // ２列目：変数の値
-    echo "<td class='second_column'>";
+    echo "<td class='second_column dump'>";
     if (isset($_REQUEST['var'])) {
         $key = $_REQUEST['var'];
         if (isset($vars_in_the_way[$i-1][$key])) {
@@ -105,7 +112,6 @@ foreach ($contents as $line) {
     echo "</td>\n";
 
     // ３列目：PHPコード
-    $line = htmlentities($line);
     echo "<td><code class='language-php'>$line</code></td></tr>\n";
 
     // 行番号が選択されている場合
@@ -113,7 +119,7 @@ foreach ($contents as $line) {
 
         // 変数の値を表形式で出力
         $vars = $vars_in_the_way[$i-1];
-        echo "</table></pre><pre class='variables'><table><tr class='name'><td>変数</td><td>値</td></tr>\n";
+        echo "</table></pre><pre class='variables'><table><tr class='name'><th>変数</th><th>値</th></tr class='dump'>\n";
         foreach ($vars as $name => $value) {
             echo "<tr><td><a href='./track.php?var=$name'><button>$$name</button></a></td><td>\n";
             var_dump($value);
