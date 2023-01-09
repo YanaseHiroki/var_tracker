@@ -11,6 +11,7 @@ require './module/header.php';
 if (file_exists('download')) remove_directory('download');
 ?>
 
+<<<<<<< Updated upstream
 <!-- JavaScript -->
 <script type="text/javascript" language="javascript">
 <!--
@@ -26,6 +27,36 @@ function OnFileSelect( inputElement )
         let file = fileList[ i ];
         fileListBody += '<input type="radio" name="main_file" value="' + file.name + '" id="' + i + '" required> ' + 
                         '<label for="' + i + '"> ' + file.name + "</label><br>";
+=======
+<form method="post" enctype="multipart/form-data" id="myForm" name="myForm">
+    <h3>(1) ファイル追加</h3><br>
+    <p><b>対応ファイル情報：</b><br>
+    異なるディレクトリにあるファイルの参照に対応しました(動作環境はChromeなどのWebkit限定です)。<br>
+    エラーがあり途中で処理が止まるファイルに対応しました。</p><br>
+
+    <label for="file">アップロードするフォルダを選択してください</label>
+    <input type="file" name="upfile[]" webkitdirectory><br>
+    <input type="submit" name="btn" value="追加" onclick="funcBtn();" />
+</form>
+
+
+<script type="text/javascript">
+
+var input = document.getElementById('myForm');
+var ele = document.createElement('input');
+var files;
+
+input.onchange = function(e) {
+  files = e.target.files; // FileList
+};
+
+function funcBtn() {
+    var ary = [];
+
+    // 相対パスを一つの文字列にまとめる
+    for (var i = 0, f; f = files[i]; ++i){
+        ary.push(files[i].webkitRelativePath);
+>>>>>>> Stashed changes
     }
  
     // 結果のHTMLを流し込む
