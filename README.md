@@ -13,10 +13,10 @@
 
 <h3>使い方(How to use)</h3><br>
 <p>[(1) ディレクトリ追加] 画面からPHPファイルがある<b>ディレクトリ</b>（フォルダー）を選択してアップロードしてください。</p>
-<img src="img/input.png" alt="ファイル追加"><hr>
+<img src="img/input.png" alt="ディレクトリ追加"><hr>
 
 <p>画面下に表示されるファイル一覧から<b>変数を確認したいファイル</b>を１つ選択してください。</p>
-<img src="img/select.png" alt="ファイル追加"><hr>
+<img src="img/select.png" alt="ファイル選択"><hr>
 
 <p>[(2) 変数追尾] 画面が表示されます。上部の<b>出力内容</b>をクリックするとコードの実行結果が表示されます。</p>
 <img src="img/track.png" alt="変数追尾"><hr>
@@ -32,8 +32,8 @@
 
 <p>エラーがあり [(2) 変数追尾] が正常に表示されない場合、[(3) エラーあり] を開きます。</p>
 <p>PHPの行と、出力内容（echo文など）が一緒に表示されます。</p>
-<img src="img/error.png" alt="変数列"><hr>
+<img src="img/error.png" alt="エラーあり"><hr>
 
 <p><b>PHPの行</b>をクリックすると、その行における変数の値が表形式で表示されます。</p>
 <p>再度、<b>PHPの行</b>をクリックすると表が非表示になります。</p>
-<img src="img/error-berak.png" alt="変数列"><hr>
+<img src="img/error-break.png" alt="ブレイクボタン"><hr>
