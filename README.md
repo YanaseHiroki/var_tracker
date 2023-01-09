@@ -1,9 +1,7 @@
 # 変数追尾君(Variable Tracker)
  In PHP file, this debug tool discloses the value of all variables at the scopoe.
  
-![var tracker screen](https://user-images.githubusercontent.com/60053865/211153996-b037b01d-74c7-4a1f-927c-809b5d52df8a.png)
- 
-[公開サイト](http://yanasehiroki.php.xdomain.jp/var_tracker/why.php)
+[公開サイト(http://yanasehiroki.php.xdomain.jp/var_tracker/why.php)](http://yanasehiroki.php.xdomain.jp/var_tracker/why.php)
 
 <h3>制作の背景</h3><br>
 
