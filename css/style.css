@@ -57,14 +57,16 @@ th,td{
     background-color: #dcf9ff;  /* 背景色指定 */
 }
 
+.undefined{
+    color:rgb(176, 219, 186)
+}
+
 table{
-    background-color: #f5f2f0;  /* 背景色指定 */
     border-collapse:  collapse;     /* セルの線を重ねる */
     line-height: 1em;
 }
 
 table button{
-    /* background-color: white;  背景色指定 */
     color: blue;
 }
 .main{
