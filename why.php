@@ -10,7 +10,8 @@ require './module/header.php';
 あやしい変数を見つけて、その値に変化がありそうなところにvar_dump()関数を埋め込む。。</p><br>
 <p>この作業を簡単にしようというデバッグツールが「変数追尾君」です。<br>
 PHPファイルをアップロードすると、各行で変数の値を簡単に確認できます。</p><br>
-<a href="help.php">使い方(How to use)</a>
+<a href="help.php" class="btn bg-primary">使い方(How to use)</a>
+
 <?php
 require './module/footer.php';
 ?>

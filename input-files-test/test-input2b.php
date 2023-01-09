@@ -1,6 +1,6 @@
 <?php 
 
-// 数値をだいたい0.8倍して返す関数
+// 数値をだいたい0.66倍して返す関数
 function hoge ($num) {
     $tmp = $num;
     for($i=0; $i<10; $i++) {
@@ -10,6 +10,6 @@ function hoge ($num) {
     return round($num); 
 }
 
-echo 'これはtest-input2.phpです';
+echo 'これはtest-input2b.phpです';
 
 ?>
