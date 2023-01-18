@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/prism.css">
     <link rel="stylesheet" href="./css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./js/scroll.js"></script>
     <script src="./js/prism.js"></script>
     <title>変数追尾君</title>
 </head>

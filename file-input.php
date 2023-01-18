@@ -71,7 +71,7 @@ if(!isset($_FILES) || !isset($_POST['file_path'])){
     $copy_path = explode(',', $_POST['file_path']);
 
     echo "<form action='track_ok.php' method='post' enctype='multipart/form-data' >";
-    echo "<p>変数の値を確認したいファイルを選んでください。</p>";
+    echo "<br><p>変数の値を確認したいファイルを選んでください。</p>";
     for($i = 0; $i < count($copy_path); $i++){
 
         //ディレクトリが存在しなかったら作る。
@@ -88,4 +88,6 @@ if(!isset($_FILES) || !isset($_POST['file_path'])){
     }
     echo "<input type='submit' value='追加'></form>";
 }  
+
+require 'module/footer.php';
 ?>

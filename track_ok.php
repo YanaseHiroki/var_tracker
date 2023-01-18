@@ -68,7 +68,8 @@ foreach ($contents as $line) {
 
     // 1列目：行番号（ブレイクリンク）
     $num = ($_REQUEST['line'] == $i) ? '' : $i;
-    print("<tr><td class='first_column'><a href=track_ok.php?line=$num><button>$i</button></a></td>\n");
+    $name = ($_REQUEST['line'] == $i) ? 'name=selected' : '';
+    echo "<tr><td class='first_column'><a href=track_ok.php?line=$num#selected $name><button>$i</button></a></td>\n";
     
     // ２列目：変数の値
     echo "<td class='second_column'>";
