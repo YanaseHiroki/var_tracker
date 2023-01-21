@@ -1,4 +1,4 @@
-<?php function ver() {echo 'ver.0.2.2';}; ?>
+<?php function ver() {echo 'ver.0.2.3';}; ?>
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/prism.css">
     <link rel="stylesheet" href="./css/style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="./js/scroll.js"></script>
     <script src="./js/prism.js"></script>
     <title>変数追尾君</title>
 </head>
@@ -26,7 +24,7 @@
         <div class="btn-group">
             <?php 
             $file = basename($_SERVER['PHP_SELF']);
-                if ($file === 'file-input.php') {
+            if ($file === 'file-input.php') {
                 $is_primary = [1, 0, 0];
             } elseif ($file === 'track_ok.php') {
                 $is_primary = [0, 1, 0];

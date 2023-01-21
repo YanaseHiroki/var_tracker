@@ -1,5 +1,5 @@
 # 変数追尾君(Variable Tracker)
- In PHP file, this debug tool discloses the value of all variables at the scopoe.
+ In PHP file, this debug tool discloses the value of all variables at the scope.
  
 [公開サイト(http://yanasehiroki.php.xdomain.jp/var_tracker/why.php)](http://yanasehiroki.php.xdomain.jp/var_tracker/why.php)
 
