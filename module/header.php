@@ -17,7 +17,7 @@
 <div class="wrapper">
     
     <!-- header -->
-    <div class="navbar-fixed-top bg-info" style="padding:0 .5em .7em">
+    <div class="bg-info" style="padding:.2em .7em .7em">
         <a href="why.php"><h4><b>変数追尾君(Variable tracker)</b>
         <?php ver(); ?></h4></a>
         
@@ -41,4 +41,4 @@
     </div>
 
     <!-- main contents -->
-    <div class="text-center" style="padding:6em 1em"><!-- コンテンツ -->
+    <div class="text-center" style="padding:1em"><!-- コンテンツ -->

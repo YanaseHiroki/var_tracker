@@ -68,7 +68,7 @@ foreach ($contents as $line) {
 
     // 1列目：行番号（ブレイクリンク）
     $num = ($_REQUEST['line'] == $i) ? '' : $i;
-    $name = ($_REQUEST['line'] == $i+4) ? 'name=selected' : '';
+    $name = ($_REQUEST['line'] == $i) ? 'name=selected' : '';
     echo "<tr><td class='first_column'><a href=track_ok.php?line=$num#selected $name><button>$i</button></a></td>\n";
     
     // ２列目：変数の値
@@ -91,7 +91,7 @@ foreach ($contents as $line) {
     }
     echo "</td>\n";
 
-    // ３列目：PHPコード
+    // ３列目：PHPコードF
     echo "<td><code class='language-php'>$line</code></td></tr>\n";
 
     // 行番号が選択されている場合

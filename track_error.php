@@ -42,15 +42,12 @@ $i=0;                                       // $i: $contentsの行番号
 foreach ($contents as $line) {  
     if(';' === substr($line, -1)) {
         $line_replace = str_replace("'", "’", $line);
-        $inserted[] = 'if($line != ' . "$i) {";
-        $inserted[] =   "echo '<a href=\"track_error.php?line=$i\"><u>
+        $num = ($_REQUEST['line'] == $i) ? '' : $i;
+        $name = ($_REQUEST['line'] == $i) ? 'name=selected' : '';
+        $inserted[] =   "echo '<a href=track_error.php?line=$num#selected $name><u>
                         <code class=\"language-php\">$line_replace</code>
                         </u></a><br>';";
-        $inserted[] = '} else {';
-        $inserted[] =   "echo '<a href=\"track_error.php\"><u>
-                        <code class=\"language-php\">$line_replace</code>
-                        </u></a><br>';}";
-            $inserted[] = $line;
+        $inserted[] = $line;
         $inserted[] = 'if($line == ' . "$i) {";
         $inserted[] = '$vars = array_diff(get_defined_vars(),$vars_initial);';
         $inserted[] = 'error_put_table($vars);}';

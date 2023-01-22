@@ -4,7 +4,6 @@
     position: relative;/*←相対位置*/
     padding-bottom: 30px;/*←footerの高さ*/
     box-sizing: border-box;/*←全て含めてmin-height:100vhに*/
-    max-width: 1100px;
 }
 
 footer{
@@ -16,8 +15,6 @@ footer{
     position: absolute;/*←絶対位置*/
     bottom: 0; /*下に固定*/
 }
-
-
 
 /* ファイル追加画面でinput要素を画面中央に配置する */
 form{
@@ -85,6 +82,6 @@ table button{
 /* 使い方ページ */
 
 img{
-    width: 60vw;
+    max-width: 900px;
     border: solid 1px;              /* 枠線指定 */
 }
